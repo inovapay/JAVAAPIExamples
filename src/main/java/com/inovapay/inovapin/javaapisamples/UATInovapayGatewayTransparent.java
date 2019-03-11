@@ -30,14 +30,14 @@ public class UATInovapayGatewayTransparent {
     public static JSONObject process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("name", "John Doe"); // Initial date for search (yyyy-MM-dd)
-        payload.put("email", "john.doe@hotmail.com"); // Final date for search (yyyy-MM-dd)
-        payload.put("cpf", "56936238157"); // Terminal id set by you !!!
-        payload.put("paymentMethod", "caixa"); // Transaction number set by you !!!
-        payload.put("amount", "10"); // Initial date for search (yyyy-MM-dd)
-        payload.put("currency", "brl"); // Final date for search (yyyy-MM-dd)
-        payload.put("reference", Math.random() * 10000); // Terminal id set by you !!!
-        payload.put("merchant_user", "johnDoe"); // Transaction number set by you !!!
+        payload.put("name", "John Doe"); // User name 
+        payload.put("email", "john.doe@hotmail.com"); // User email
+        payload.put("cpf", "56936238157"); // User cpf
+        payload.put("paymentMethod", "caixa"); // It will be the defined deposit method:boleto, banco-do-brasil, bradesco, caixa, itau, santander
+        payload.put("amount", "10"); // Deposit amount
+        payload.put("currency", "brl"); // Deposit currency
+        payload.put("reference", Math.random() * 10000); // Deposit reference code
+        payload.put("merchant_user", "johnDoe"); // Uesr identification on your system
         
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/direct/deposit";
