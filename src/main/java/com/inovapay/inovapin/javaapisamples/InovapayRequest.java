@@ -152,7 +152,6 @@ public class InovapayRequest {
         conn.setDoOutput(true);
         conn.setInstanceFollowRedirects(false);
         conn.setRequestMethod(requestMethod);
-        conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("x-api-key", MERCHANT_API_KEY);
         conn.setUseCaches(false);
 
