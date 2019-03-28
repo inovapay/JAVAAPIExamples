@@ -27,7 +27,7 @@ public class UATInovapayGatewayTransparent {
 
     }
 
-    public static JSONObject process() throws Exception {
+    public static String process() throws Exception {
         JSONObject payload = new JSONObject();
 
         payload.put("name", "John Doe"); // User name 
@@ -42,7 +42,7 @@ public class UATInovapayGatewayTransparent {
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/direct/deposit";
         String response = inovapayRequest.doDirectRequest("GET", path, payload);
-        return parseString(response);
+        return response;
     }
 
     private static JSONObject parseString(String data) throws Exception {
