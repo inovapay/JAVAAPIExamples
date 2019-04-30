@@ -31,10 +31,10 @@ public class UATInovapayGatewayTransparent {
         JSONObject payload = new JSONObject();
 
         payload.put("name", "John Doe"); // User name 
-        payload.put("email", "john.doe@hotmail.com"); // User email
+        payload.put("email", "jero@jero.co"); // User email
         payload.put("cpf", "56936238157"); // User cpf
         payload.put("paymentMethod", "caixa"); // It will be the defined deposit method:boleto, banco-do-brasil, bradesco, caixa, itau, santander
-        payload.put("amount", "10"); // Deposit amount
+        payload.put("amount", "30"); // Deposit amount
         payload.put("currency", "brl"); // Deposit currency
         payload.put("reference", Math.random() * 10000); // Deposit reference code
         payload.put("merchant_user", "johnDoe"); // Uesr identification on your system
