@@ -32,8 +32,8 @@ public class InovapayRequest {
 
     private final String ROOT_PATH = "https://uat.inovapay.com/"; // UAT inovapay base url
     private String siteUrl;
-    private final String MERCHANT_API_KEY = "8018580"; // Your API key
-    private final String MERCHANT_API_SECRET = "e42573f5782eb327db7e24fb6f85977ac811c11c"; // Your API secret
+    private final String MERCHANT_API_KEY = "9396735"; // Your API key
+    private final String MERCHANT_API_SECRET = "ee0123a639e3fecc6fb7b83a4318186b6950b172"; // Your API secret
 
     /**
      * Constructor
@@ -62,9 +62,7 @@ public class InovapayRequest {
                 .setIssuer("INOVAPIN")
                 .setSubject("REDEEM")
                 .claim("data", body)
-                // Fri Jun 24 2016 15:33:42 GMT-0400 (EDT)
                 .setIssuedAt(Date.from(Instant.ofEpochMilli((new Date()).getTime() - 500)))
-                // Sat Jun 24 2116 15:33:42 GMT-0400 (EDT)
                 .setExpiration(Date.from(Instant.ofEpochMilli((new Date()).getTime() + 6000)))
                 .signWith(
                         SignatureAlgorithm.HS256, MERCHANT_API_SECRET.getBytes("UTF-8")
@@ -77,7 +75,6 @@ public class InovapayRequest {
 
         LOGGER.log(Level.INFO, "URL:", siteUrl);
 
-    
         URL url = new URL(siteUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -96,7 +93,8 @@ public class InovapayRequest {
 
         if (conn.getResponseCode() != 200) {
             LOGGER.log(Level.SEVERE, "HTTP Code:", conn.getResponseCode());
-            throw new Exception("HTTP Code:" + conn.getResponseCode());
+            
+            LOGGER.log(Level.SEVERE, "----------------------------------");
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -134,52 +132,19 @@ public class InovapayRequest {
                 .setIssuer("INOVAPIN")
                 .setSubject("REDEEM")
                 .claim("data", body)
-                // Fri Jun 24 2016 15:33:42 GMT-0400 (EDT)
                 .setIssuedAt(Date.from(Instant.ofEpochMilli((new Date()).getTime() - 500)))
-                // Sat Jun 24 2116 15:33:42 GMT-0400 (EDT)
-                .setExpiration(Date.from(Instant.ofEpochMilli((new Date()).getTime() + 6000)))
+                .setExpiration(Date.from(Instant.ofEpochMilli((new Date()).getTime() + 15000)))
                 .signWith(
                         SignatureAlgorithm.HS256, MERCHANT_API_SECRET.getBytes("UTF-8")
                 )
                 .compact();
 
-        LOGGER.log(Level.INFO, "URL:", siteUrl);
+        LOGGER.log(Level.INFO, "URL: {0}", siteUrl);
 
     
         URL url = new URL(siteUrl + "/" + MERCHANT_API_KEY + "/" +jwtData );
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        conn.setDoOutput(true);
-        conn.setInstanceFollowRedirects(false);
-        conn.setRequestMethod(requestMethod);
-        conn.setRequestProperty("x-api-key", MERCHANT_API_KEY);
-        conn.setUseCaches(false);
-
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(conn.getOutputStream());
-        outputStreamWriter.write("");
-        outputStreamWriter.flush();
-
-        conn.connect();
-
-        if (conn.getResponseCode() != 200) {
-            LOGGER.log(Level.SEVERE, "HTTP Code:", conn.getResponseCode());
-            throw new Exception("HTTP Code:" + conn.getResponseCode());
-        }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                (conn.getInputStream())));
-
-        String output;
-        StringBuilder response = new StringBuilder();
-        while ((output = br.readLine()) != null) {
-            response.append(output);
-        }
-
-        LOGGER.log(Level.INFO, "Response:", response.toString());
-
-        conn.disconnect();
-
-        return response.toString();
+        LOGGER.log(Level.INFO, "URL: {0}", url);
+        return "";
     }
 
 }
