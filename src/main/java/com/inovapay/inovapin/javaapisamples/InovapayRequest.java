@@ -8,6 +8,7 @@ package com.inovapay.inovapin.javaapisamples;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -20,8 +21,8 @@ import java.util.logging.Logger;
 import org.json.simple.JSONObject;
 
 /**
- * Class user to make the call to inovapay redeem services. 
- * 
+ * Class user to make the call to inovapay redeem services.
+ *
  * @author dclav
  */
 public class InovapayRequest {
@@ -30,26 +31,26 @@ public class InovapayRequest {
 
     protected static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
 
-    private final String ROOT_PATH = "https://uat.inovapay.com/"; // UAT inovapay base url
+    private final String ROOT_PATH = "https://uat.inovapay.com"; // UAT inovapay base url
     private String siteUrl;
     private final String MERCHANT_API_KEY = "9396735"; // Your API key
     private final String MERCHANT_API_SECRET = "ee0123a639e3fecc6fb7b83a4318186b6950b172"; // Your API secret
 
     /**
      * Constructor
-     * 
+     *
      */
     public InovapayRequest() {
-           
+
     }
 
     /**
      * Method to do the final call to inovapay services through HTTP request.
-     * 
+     *
      * @param requestMethod Request method (POST, PUT, GET, etc)
      * @param requestUri Request uri of the service
-     * @param body Request body to be sent to inovapay service. 
-     * @return String representation of inovapay response. 
+     * @param body Request body to be sent to inovapay service.
+     * @return String representation of inovapay response.
      * @throws Exception
      */
     public String doRequest(String requestMethod, String requestUri, JSONObject body) throws Exception {
@@ -63,7 +64,7 @@ public class InovapayRequest {
                 .setSubject("REDEEM")
                 .claim("data", body)
                 .setIssuedAt(Date.from(Instant.ofEpochMilli((new Date()).getTime() - 500)))
-                .setExpiration(Date.from(Instant.ofEpochMilli((new Date()).getTime() + 6000)))
+                .setExpiration(Date.from(Instant.ofEpochMilli((new Date()).getTime() + 60000)))
                 .signWith(
                         SignatureAlgorithm.HS256, MERCHANT_API_SECRET.getBytes("UTF-8")
                 )
@@ -91,14 +92,17 @@ public class InovapayRequest {
 
         conn.connect();
 
-        if (conn.getResponseCode() != 200) {
-            LOGGER.log(Level.SEVERE, "HTTP Code:", conn.getResponseCode());
-            
-            LOGGER.log(Level.SEVERE, "----------------------------------");
+        HttpURLConnection httpConn = (HttpURLConnection) conn;
+        InputStream _is;
+        if (httpConn.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
+            _is = httpConn.getInputStream();
+        } else {
+            /* error from server */
+            _is = httpConn.getErrorStream();
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
-                (conn.getInputStream())));
+                (_is)));
 
         String output;
         StringBuilder response = new StringBuilder();
@@ -112,14 +116,15 @@ public class InovapayRequest {
 
         return response.toString();
     }
-    
+
     /**
-     * Method to do the final call to inovapay gateway services through HTTP request.
-     * 
+     * Method to do the final call to inovapay gateway services through HTTP
+     * request.
+     *
      * @param requestMethod Request method (POST, PUT, GET, etc)
      * @param requestUri Request uri of the service
-     * @param body Request body to be sent to inovapay service. 
-     * @return String representation of inovapay response. 
+     * @param body Request body to be sent to inovapay service.
+     * @return String representation of inovapay response.
      * @throws Exception
      */
     public String doDirectRequest(String requestMethod, String requestUri, JSONObject body) throws Exception {
@@ -141,8 +146,7 @@ public class InovapayRequest {
 
         LOGGER.log(Level.INFO, "URL: {0}", siteUrl);
 
-    
-        URL url = new URL(siteUrl + "/" + MERCHANT_API_KEY + "/" +jwtData );
+        URL url = new URL(siteUrl + "/" + MERCHANT_API_KEY + "/" + jwtData);
         LOGGER.log(Level.INFO, "URL: {0}", url);
         return "";
     }

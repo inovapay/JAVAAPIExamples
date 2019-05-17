@@ -30,7 +30,7 @@ public class UATInovapayGatewayTranStatus {
     public static JSONObject process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("reference", "923456789"); // Reference of past transaction given by Merchant
+        payload.put("reference", "522125"); // Reference of past transaction given by Merchant
         
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "api/status";

@@ -35,7 +35,7 @@ public class UATInovapayGatewayTransparent {
         payload.put("cpf", "56936238157"); // User cpf
         payload.put("paymentMethod", "caixa"); // It will be the defined deposit method:boleto, banco-do-brasil, bradesco, caixa, itau, santander
         payload.put("amount", "30"); // Deposit amount
-        payload.put("currency", "brl"); // Deposit currency
+        payload.put("currency", "BRL"); // Deposit currency
         payload.put("reference", Math.random() * 10000); // Deposit reference code
         payload.put("merchant_user", "johnDoe"); // Uesr identification on your system
         
