@@ -15,7 +15,7 @@ import org.json.simple.parser.JSONParser;
  * @author dclav
  */
 public class UATInovapayGatewayTransparent {
-    
+
     private static final Logger LOGGER = Logger.getLogger(UATInovapayGatewayTransparent.class.getName());
 
     public static void main(String args[]) {
@@ -37,8 +37,9 @@ public class UATInovapayGatewayTransparent {
         payload.put("amount", "30"); // Deposit amount
         payload.put("currency", "BRL"); // Deposit currency
         payload.put("reference", Math.random() * 10000); // Deposit reference code
-        payload.put("merchant_user", "johnDoe"); // Uesr identification on your system
-        
+        payload.put("merchant_user", "johnDoe"); // User identification on your system
+        payload.put("country", "BR"); // User country on ISO 3166 format
+
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/direct/deposit";
         String response = inovapayRequest.doDirectRequest("GET", path, payload);
@@ -52,5 +53,5 @@ public class UATInovapayGatewayTransparent {
 
         return result;
     }
-    
+
 }
