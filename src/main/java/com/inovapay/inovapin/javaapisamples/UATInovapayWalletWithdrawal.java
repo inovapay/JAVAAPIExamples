@@ -30,13 +30,13 @@ public class UATInovapayWalletWithdrawal {
     public static JSONObject process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("reference", Math.random() * 10000); // Current transaction id, set by you !!!
+        payload.put("reference", Math.random() * 10000 ); // Current transaction id, set by you 
         payload.put("user_id", "123456"); // User’s ID on Inovapay
-        payload.put("user_login", "admin123"); // User’s Login on Merchant
-        payload.put("user_name", "Admin"); // User’s Login on Merchant
-        payload.put("user_secure_id", "123456789"); // User’s Secure ID on Inovapay
-        payload.put("amount", "10"); // Transaction Value. Ex. (100.50)
-        payload.put("currency", "brl"); // “usd” or “brl”
+        payload.put("user_login", "Admin"); // User’s Login on Merchant
+        payload.put("user_name", "Admin123"); // User’s Login on Merchant
+        payload.put("user_secure_id", "459439"); // User’s Secure ID on Inovapay
+        payload.put("amount", "100"); // Transaction Value. Ex. (100.50)
+        payload.put("currency", "BRL"); // “USD” or “BRL”
         payload.put("action", "create"); // “validate” or “create”
 
         InovapayRequest inovapayRequest = new InovapayRequest();

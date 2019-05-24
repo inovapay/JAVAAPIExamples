@@ -30,9 +30,9 @@ public class UATInovapayPinMerTranQuery {
     public static JSONObject process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("pastTranID", "41347"); // Your past transaction id that you wish to query
-        payload.put("terminalID", "Terminal1"); // Terminal id set by you !!!
-        payload.put("currentTranID", Math.random() * 10000); // Transaction number set by you !!!
+        payload.put("pastReference", "41347"); // Your past transaction id that you wish to query
+        payload.put("terminalID", "Terminal1"); // Terminal id set by you 
+        payload.put("reference", Math.random() * 10000); // Transaction number set by you 
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/inovapin/trans/transId";

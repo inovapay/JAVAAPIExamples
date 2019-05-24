@@ -31,8 +31,8 @@ public class UATInovapayPinValidate {
         JSONObject payload = new JSONObject();
 
         payload.put("pin", "1234567890123456"); // 16 digit user pin number
-        payload.put("terminalID", "Terminal1"); // Terminal id set by you !!!
-        payload.put("currentTranID", Math.random() * 10000); // Transaction number set by you !!!
+        payload.put("terminalID", "Terminal1"); // Terminal id set by the merchant
+        payload.put("reference", Math.random() * 10000); // Reference number set by the merchant
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/inovapin/voucher/validate";

@@ -32,8 +32,8 @@ public class UATInovapayPinDateQuery {
 
         payload.put("fromDate", "2018-01-01"); // Initial date for search (yyyy-MM-dd)
         payload.put("toDate", "2019-04-04"); // Final date for search (yyyy-MM-dd)
-        payload.put("terminalID", "Terminal1"); // Terminal id set by you !!!
-        payload.put("currentTranID", Math.random() * 10000); // Transaction number set by you !!!
+        payload.put("terminalID", "Terminal1"); // Terminal id set by the merchant
+        payload.put("reference", Math.random() * 10000); // Transaction number set by the merchant
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/inovapin/trans/between";

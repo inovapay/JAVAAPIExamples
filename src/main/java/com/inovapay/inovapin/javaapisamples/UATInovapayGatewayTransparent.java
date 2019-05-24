@@ -30,14 +30,14 @@ public class UATInovapayGatewayTransparent {
     public static String process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("name", "John Doe"); // User name 
-        payload.put("email", "jero@jero.co"); // User email
-        payload.put("cpf", "56936238157"); // User cpf
-        payload.put("paymentMethod", "caixa"); // It will be the defined deposit method:boleto, banco-do-brasil, bradesco, caixa, itau, santander
-        payload.put("amount", "30"); // Deposit amount
+        payload.put("name", "TestBet TestBet"); // User name 
+        payload.put("email", "testbet@mailinator.comzw"); // User email
+        //payload.put("cpf", "56936238157"); // User cpf
+        //payload.put("paymentMethod", "caixa"); // It will be the defined deposit method:boleto, banco-do-brasil, bradesco, caixa, itau, santander
+        payload.put("amount", "44.194"); // Deposit amount
         payload.put("currency", "BRL"); // Deposit currency
         payload.put("reference", Math.random() * 10000); // Deposit reference code
-        payload.put("merchant_user", "johnDoe"); // User identification on your system
+        payload.put("merchant_user", "116773478"); // User identification on your system
         payload.put("country", "BR"); // User country on ISO 3166 format
 
         InovapayRequest inovapayRequest = new InovapayRequest();
