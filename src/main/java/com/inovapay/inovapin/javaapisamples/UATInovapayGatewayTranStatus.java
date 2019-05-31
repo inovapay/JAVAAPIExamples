@@ -34,8 +34,8 @@ public class UATInovapayGatewayTranStatus {
 
         JSONObject payload = new JSONObject();
 
-        references.add("522125");
-        references.add("522126");
+        references.add("634643");
+        references.add("345634");
 
         tranDates.add("2019-05-11"); // Dates on yyyy-MM-dd format.
         tranDates.add("2019-05-24"); // Dates on yyyy-MM-dd format.
@@ -48,7 +48,12 @@ public class UATInovapayGatewayTranStatus {
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "api/status";
         String response = inovapayRequest.doRequest("POST", path, payload);
-        return parseString(response);
+        JSONObject responseJSON = parseString(response);
+        if(responseJSON.containsKey("jwt")){
+            return inovapayRequest.decodeJWTResponseToken(responseJSON);
+        }else{
+            return responseJSON;
+        }
     }
 
     private static JSONObject parseString(String data) throws Exception {

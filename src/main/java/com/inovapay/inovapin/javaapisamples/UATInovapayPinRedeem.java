@@ -30,14 +30,19 @@ public class UATInovapayPinRedeem {
     public static JSONObject process() throws Exception {
         JSONObject payload = new JSONObject();
 
-        payload.put("pin", "8293690129167371"); // 16 digit user pin number
+        payload.put("pin", "1234567890123456"); // 16 digit user pin number
         payload.put("terminalID", "Terminal1"); // Terminal id set by you 
         payload.put("reference", Math.random() * 10000); // Transaction number set by you 
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/inovapin/voucher/redeem";
         String response = inovapayRequest.doRequest("PUT", path, payload);
-        return parseString(response);
+        JSONObject responseJSON = parseString(response);
+        if(responseJSON.containsKey("jwt")){
+            return inovapayRequest.decodeJWTResponseToken(responseJSON);
+        }else{
+            return responseJSON;
+        }
     }
 
     private static JSONObject parseString(String data) throws Exception {

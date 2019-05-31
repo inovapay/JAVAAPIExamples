@@ -37,7 +37,13 @@ public class UATInovapayPinValidate {
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/inovapin/voucher/validate";
         String response = inovapayRequest.doRequest("POST", path, payload);
-        return parseString(response);
+        JSONObject responseJSON = parseString(response);
+        if(responseJSON.containsKey("jwt")){
+            return inovapayRequest.decodeJWTResponseToken(responseJSON);
+        }else{
+            return responseJSON;
+        }
+        
     }
 
     private static JSONObject parseString(String data) throws Exception {

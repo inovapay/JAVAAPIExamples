@@ -31,18 +31,23 @@ public class UATInovapayWalletWithdrawal {
         JSONObject payload = new JSONObject();
 
         payload.put("reference", Math.random() * 10000 ); // Current transaction id, set by you 
-        payload.put("user_id", "123456"); // User’s ID on Inovapay
+        payload.put("user_id", "346435643"); // User’s ID on Inovapay
         payload.put("user_login", "Admin"); // User’s Login on Merchant
         payload.put("user_name", "Admin123"); // User’s Login on Merchant
-        payload.put("user_secure_id", "459439"); // User’s Secure ID on Inovapay
-        payload.put("amount", "100"); // Transaction Value. Ex. (100.50)
+        payload.put("user_secure_id", "4643643"); // User’s Secure ID on Inovapay
+        payload.put("amount", "50"); // Transaction Value. Ex. (100.50)
         payload.put("currency", "BRL"); // “USD” or “BRL”
         payload.put("action", "create"); // “validate” or “create”
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/api/withdrawal";
         String response = inovapayRequest.doRequest("POST", path, payload);
-        return parseString(response);
+        JSONObject responseJSON = parseString(response);
+        if(responseJSON.containsKey("jwt")){
+            return inovapayRequest.decodeJWTResponseToken(responseJSON);
+        }else{
+            return responseJSON;
+        }
     }
 
     private static JSONObject parseString(String data) throws Exception {

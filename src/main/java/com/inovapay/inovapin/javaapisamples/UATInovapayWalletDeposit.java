@@ -31,17 +31,22 @@ public class UATInovapayWalletDeposit {
         JSONObject payload = new JSONObject();
 
         payload.put("reference", Math.random() * 10000); // Current transaction id, set by you
-        payload.put("user_id", "123456"); // User’s ID on Inovapay
+        payload.put("user_id", "34564364"); // User’s ID on Inovapay
         payload.put("user_login", "admin123"); // User’s Login on Merchant
         payload.put("user_name", "Admin"); // User’s Login on Merchant
-        payload.put("user_secure_id", "459439"); // User’s Secure ID on Inovapay
-        payload.put("amount", "200"); // Transaction Value. Ex. (100.50)
+        payload.put("user_secure_id", "3456345634"); // User’s Secure ID on Inovapay
+        payload.put("amount", "50"); // Transaction Value. Ex. (100.50)
         payload.put("currency", "BRL"); // “USD” or “BRL”
 
         InovapayRequest inovapayRequest = new InovapayRequest();
         String path = "/api/deposit";
         String response = inovapayRequest.doRequest("POST", path, payload);
-        return parseString(response);
+        JSONObject responseJSON = parseString(response);
+        if(responseJSON.containsKey("jwt")){
+            return inovapayRequest.decodeJWTResponseToken(responseJSON);
+        }else{
+            return responseJSON;
+        }
     }
 
     private static JSONObject parseString(String data) throws Exception {

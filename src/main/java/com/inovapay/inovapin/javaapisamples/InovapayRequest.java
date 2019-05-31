@@ -5,6 +5,7 @@
  */
 package com.inovapay.inovapin.javaapisamples;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * Class user to make the call to inovapay redeem services.
@@ -31,10 +33,10 @@ public class InovapayRequest {
 
     protected static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
 
-    private final String ROOT_PATH = "https://uat.inovapay.com"; // UAT inovapay base url
+    private final String ROOT_PATH = "https://uat.inovapay.com/"; // UAT inovapay base url
     private String siteUrl;
-    private final String MERCHANT_API_KEY = "9396735"; // Your API key
-    private final String MERCHANT_API_SECRET = "ee0123a639e3fecc6fb7b83a4318186b6950b172"; // Your API secret
+    private final String MERCHANT_API_KEY = "API_KEY"; // Your API key
+    private final String MERCHANT_API_SECRET = "API_SECRET"; // Your API secret
 
     /**
      * Constructor
@@ -149,6 +151,28 @@ public class InovapayRequest {
         URL url = new URL(siteUrl + "/" + MERCHANT_API_KEY + "/" + jwtData);
         LOGGER.log(Level.INFO, "URL: {0}", url);
         return "";
+    }
+
+    public JSONObject decodeJWTResponseToken(JSONObject jwtCoded) throws Exception{
+        LOGGER.log(Level.INFO, "jwt:{0}***", jwtCoded);
+        LOGGER.log(Level.INFO, "apiSecret:{0}***", MERCHANT_API_SECRET);
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(MERCHANT_API_SECRET.getBytes())
+                .parseClaimsJws(jwtCoded.get("jwt").toString()).getBody();
+
+        LOGGER.log(Level.INFO, "ID: {0}", claims.getId());
+        LOGGER.log(Level.INFO, "Subject: {0}", claims.getSubject());
+        LOGGER.log(Level.INFO, "Issuer: {0}", claims.getIssuer());
+        LOGGER.log(Level.INFO, "Expiration: {0}", claims.getExpiration());
+        LOGGER.log(Level.INFO, "Claim: {0}", claims);
+        LOGGER.log(Level.INFO, "Claim Keys: {0}", claims.keySet());
+
+        JSONObject result = new JSONObject(claims);
+
+        JSONParser parser = new JSONParser();
+
+        return (JSONObject) ((JSONObject) parser.parse(result.toJSONString()));
     }
 
 }
